@@ -1,3 +1,4 @@
+import TodosRemaining from "./TodosRemaining";
 
 function TaskList(props) {
      return <div>
@@ -42,10 +43,9 @@ function TaskList(props) {
          </ul>
          <div className="check-all-container">
              <div>
-                 <div className="button">Check All</div>
+                 <button onClick={props.markAllChecked} className="button">Check All</button>
              </div>
-
-             <span>3 items remaining</span>
+            <TodosRemaining todos={props.todos}/>
          </div>
 
          <div className="other-buttons-container">
@@ -57,7 +57,7 @@ function TaskList(props) {
                  <button className="button filter-button">Completed</button>
              </div>
              <div>
-                 <button className="button">Clear completed</button>
+                 <button  onClick={props.deleteAllCompleted} className="button">Clear completed</button>
              </div>
          </div>
      </div>

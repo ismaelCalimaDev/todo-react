@@ -82,13 +82,33 @@ function App() {
         setTodos(updatedTodos);
     }
 
+    function markAllChecked() {
+        const updatedTodos = todos.map((todo) => {
+            todo.isComplete = true
+            return todo;
+        })
+        setTodos(updatedTodos)
+    }
+
+    function deleteAllCompleted() {
+        setTodos((prevTodos) => prevTodos.filter((todo) => todo.isComplete === false))
+    }
+
     return (
         <div className="todo-app-container">
             <div className="todo-app">
                 <h2>Todo App</h2>
                 <TaskForm addTodo={addTodo}/>
                 {todos.length > 0 ?
-                    <TaskList todos={todos} deleteTodo={deleteTodo} handleCheckBox={handleCheckBox} markAsEdit={markAsEdit} updateTodo={updateTodo}/>
+                    <TaskList
+                        todos={todos}
+                        deleteTodo={deleteTodo}
+                        handleCheckBox={handleCheckBox}
+                        markAsEdit={markAsEdit}
+                        updateTodo={updateTodo}
+                        markAllChecked={markAllChecked}
+                        deleteAllCompleted={deleteAllCompleted}
+                    />
                     :
                     <EmptyTasks/>
                 }
