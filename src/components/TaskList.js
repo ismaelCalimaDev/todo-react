@@ -1,9 +1,15 @@
 import TodosRemaining from "./TodosRemaining";
+import { useState } from "react";
 
 function TaskList(props) {
+    const [filter, setFilter] = useState('all')
+
+    function changeFilter(filter) {
+        setFilter(filter)
+    }
      return <div>
          <ul className="todo-list">
-             {props.todos.map((todo) => {
+             {props.filteredTodos(filter).map((todo) => {
                  return (
                      <li key={todo.id} className="todo-item-container">
                          <div className="todo-item">
@@ -50,11 +56,11 @@ function TaskList(props) {
 
          <div className="other-buttons-container">
              <div>
-                 <button className="button filter-button filter-button-active">
+                 <button onClick={() =>changeFilter('all')} className={`button filter-button ${filter === 'all'? 'filter-button-active': ''}`}>
                      All
                  </button>
-                 <button className="button filter-button">Active</button>
-                 <button className="button filter-button">Completed</button>
+                 <button onClick={() =>changeFilter('active')} className={`button filter-button ${filter === 'active'? 'filter-button-active': ''}`}>Active</button>
+                 <button onClick={() =>changeFilter('completed')} className={`button filter-button ${filter === 'completed'? 'filter-button-active': ''}`}>Completed</button>
              </div>
              <div>
                  <button  onClick={props.deleteAllCompleted} className="button">Clear completed</button>

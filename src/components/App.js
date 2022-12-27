@@ -94,6 +94,16 @@ function App() {
         setTodos((prevTodos) => prevTodos.filter((todo) => todo.isComplete === false))
     }
 
+    function filteredTodos(filter) {
+        if(filter === 'active'){
+            return todos.filter((todo) => todo.isComplete === false)
+        }else if (filter === 'completed' ) {
+            return todos.filter((todo) => todo.isComplete === true)
+        }else {
+            return todos
+        }
+    }
+
     return (
         <div className="todo-app-container">
             <div className="todo-app">
@@ -108,6 +118,7 @@ function App() {
                         updateTodo={updateTodo}
                         markAllChecked={markAllChecked}
                         deleteAllCompleted={deleteAllCompleted}
+                        filteredTodos={filteredTodos}
                     />
                     :
                     <EmptyTasks/>
