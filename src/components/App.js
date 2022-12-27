@@ -1,6 +1,9 @@
 import '../reset.css';
 import '../App.css';
 import {useState} from "react";
+import EmptyTasks from "./EmptyTasks";
+import TaskForm from "./TaskForm";
+import TaskList from "./TaskList";
 
 function App() {
 
@@ -25,28 +28,20 @@ function App() {
         },
     ]);
 
-    const [todoInput, setTodoInput] = useState('');
 
-    const [idForTodo, setIdForTodo] = useState(todos[todos.length -1].id + 1)
+    const [idForTodo, setIdForTodo] = useState(todos.length !== 0? todos[todos.length -1].id + 1 : 1)
 
-    function addTodo() {
-        if(todoInput.trim().length !== 0) {
-            setTodos([
-                ...todos,
-                {
-                    id: idForTodo,
-                    title: todoInput,
-                    isComplete: false,
-                },
-            ]);
+    function addTodo(title) {
+        setTodos([
+            ...todos,
+            {
+                id: idForTodo,
+                title: title,
+                isComplete: false,
+            },
+        ]);
 
-            setIdForTodo(value => value + 1)
-            setTodoInput('')
-        }
-    }
-
-    function updateTodoInput(e) {
-        setTodoInput(e.target.value)
+        setIdForTodo(value => value + 1)
     }
 
     function deleteTodo(id) {
@@ -91,76 +86,12 @@ function App() {
         <div className="todo-app-container">
             <div className="todo-app">
                 <h2>Todo App</h2>
-                <form action="#" onSubmit={addTodo}>
-                    <input
-                        type="text"
-                        className="todo-input"
-                        placeholder="What do you need to do?"
-                        value={todoInput}
-                        onChange={updateTodoInput}
-                    />
-                </form>
-
-                <ul className="todo-list">
-                    {todos.map((todo) => {
-                        return (
-                                <li key={todo.id} className="todo-item-container">
-                                    <div className="todo-item">
-                                        <input type="checkbox" onChange={() => handleCheckBox(todo.id)} checked={todo.isComplete}/>
-                                        {!todo.isEditing?
-                                            ( <span onDoubleClick={() =>markAsEdit(todo.id)} className={`todo-item-label ${todo.isComplete?'line-through': ''}`}>{todo.title}</span>
-                                            ): <input type="text" className="todo-item-input" defaultValue={todo.title}
-                                                      onKeyDown={(event)=> {
-                                                            if(event.key === 'Enter') {
-                                                                updateTodo(event, todo.id)
-                                                            }
-                                                        }
-                                                      }
-                                                      onBlur={(event)=> updateTodo(event, todo.id)}
-                                                      autoFocus
-                                            />
-                                        }
-                                    </div>
-                                    <button onClick={() => deleteTodo(todo.id)} className="x-button">
-                                        <svg
-                                            className="x-button-icon w-6 h-6"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                    </button>
-                                </li>
-                        )
-                    } )}
-                </ul>
-
-                <div className="check-all-container">
-                    <div>
-                        <div className="button">Check All</div>
-                    </div>
-
-                    <span>3 items remaining</span>
-                </div>
-
-                <div className="other-buttons-container">
-                    <div>
-                        <button className="button filter-button filter-button-active">
-                            All
-                        </button>
-                        <button className="button filter-button">Active</button>
-                        <button className="button filter-button">Completed</button>
-                    </div>
-                    <div>
-                        <button className="button">Clear completed</button>
-                    </div>
-                </div>
+                <TaskForm addTodo={addTodo}/>
+                {todos.length > 0 ?
+                    <TaskList todos={todos} deleteTodo={deleteTodo} handleCheckBox={handleCheckBox} markAsEdit={markAsEdit} updateTodo={updateTodo}/>
+                    :
+                    <EmptyTasks/>
+                }
             </div>
         </div>
     );
