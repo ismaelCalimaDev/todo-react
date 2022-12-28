@@ -5,29 +5,11 @@ import EmptyTasks from "./EmptyTasks";
 import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
 import NameForm from "./NameForm";
+import useSaveLocalStorage from "../hooks/useSaveLocalStorage";
 
 function App() {
 
-    const [todos, setTodos] = useState([
-        {
-            id: 1,
-            title: 'Finish React Series',
-            isComplete: false,
-            isEditing: false,
-        },
-        {
-            id: 2,
-            title: 'Go Grocery',
-            isComplete: true,
-            isEditing: false,
-        },
-        {
-            id: 3,
-            title: 'Take over world',
-            isComplete: false,
-            isEditing: false,
-        },
-    ]);
+    const [todos, setTodos] = useSaveLocalStorage('todos', [])
 
 
     const [idForTodo, setIdForTodo] = useState(todos.length !== 0? todos[todos.length -1].id + 1 : 1)

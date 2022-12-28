@@ -1,7 +1,8 @@
 import {useEffect, useRef, useState} from "react";
+import useSaveLocalStorage from "../hooks/useSaveLocalStorage";
 
 function NameForm() {
-    const [nameInput, setNameInput] = useState('')
+    const [nameInput, setNameInput] = useSaveLocalStorage('name', '')
     const refInput = useRef(null)
 
     useEffect(() => {
