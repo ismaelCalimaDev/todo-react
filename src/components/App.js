@@ -4,6 +4,7 @@ import {useState} from "react";
 import EmptyTasks from "./EmptyTasks";
 import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
+import NameForm from "./NameForm";
 
 function App() {
 
@@ -107,6 +108,8 @@ function App() {
     return (
         <div className="todo-app-container">
             <div className="todo-app">
+                <h2>What is your name?</h2>
+                <NameForm/>
                 <h2>Todo App</h2>
                 <TaskForm addTodo={addTodo}/>
                 {todos.length > 0 ?
