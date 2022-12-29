@@ -6,6 +6,7 @@ import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
 import NameForm from "./NameForm";
 import useSaveLocalStorage from "../hooks/useSaveLocalStorage";
+import {TodosContext} from "../context/TodosContext";
 
 function App() {
 
@@ -13,19 +14,6 @@ function App() {
 
 
     const [idForTodo, setIdForTodo] = useState(todos.length !== 0? todos[todos.length -1].id + 1 : 1)
-
-    function addTodo(title) {
-        setTodos([
-            ...todos,
-            {
-                id: idForTodo,
-                title: title,
-                isComplete: false,
-            },
-        ]);
-
-        setIdForTodo(value => value + 1)
-    }
 
     function deleteTodo(id) {
         setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id))
@@ -93,7 +81,9 @@ function App() {
                 <h2>What is your name?</h2>
                 <NameForm/>
                 <h2>Todo App</h2>
-                <TaskForm addTodo={addTodo}/>
+                <TodosContext.Provider value={{todos, setTodos, idForTodo, setIdForTodo}}>
+                    <TaskForm/>
+                </TodosContext.Provider>
                 {todos.length > 0 ?
                     <TaskList
                         todos={todos}
