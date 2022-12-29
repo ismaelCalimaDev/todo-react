@@ -4,6 +4,7 @@ function NavBar() {
         <a href="/contact">Contact</a>
         <a href="/about">About</a>
         <a href="/tasks">Tasks</a>
+        <a href="/jokes">Jokes</a>
     </nav>
     );
 }
